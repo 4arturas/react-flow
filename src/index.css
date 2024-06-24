@@ -1,0 +1,34 @@
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.edgebutton {
+  width: 20px;
+  height: 20px;
+  background: #eee;
+  border: 1px solid #fff;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.edgebutton:hover {
+  box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.08);
+}
+
+.react-flow__edge-path {
+  stroke: #333;
+  stroke-width: 2;
+}
+
+.temp .react-flow__edge-path {
+  stroke: #bbb;
+  stroke-dasharray: 5 5;
+}

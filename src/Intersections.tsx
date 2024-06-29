@@ -1,8 +1,7 @@
 import {useImmerAtom} from "jotai-immer";
 import {nodesJotai} from "./jotaiAtoms.ts";
-import {Background, ReactFlow, useEdgesState, useNodesState, useReactFlow} from "reactflow";
+import {Background, ReactFlow, useEdgesState, useNodesState, useReactFlow, Node} from "reactflow";
 import React, {type MouseEvent as ReactMouseEvent} from "react";
-import {Node} from "@reactflow/core/dist/esm/types/nodes";
 
 export const Intersections = () =>
 {

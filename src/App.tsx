@@ -7,11 +7,8 @@ import {AddNode} from "./AddNode.tsx";
 import {ReactFlowProvider} from "reactflow";
 import {Intersections} from "./Intersections.tsx";
 import {FloatingEdges} from "./FloatingEdges.tsx";
-import {FloatingEdgeMy} from "./FloatingEdgeMy.tsx";
 import {ProximityConnect} from "./ProximityConnect.tsx";
-import {ProximityConnectMy} from "./ProximityConnectMy.tsx";
-import {AddNodeMy} from "./AddNodeMy.tsx";
-import {IntersectionsMy} from "./IntersectionsMy.tsx";
+import {Tutorial} from "./Tutorial.tsx";
 
 function App()
 {
@@ -29,14 +26,11 @@ function App()
             {/*<CharacterCounter/>*/}
             {/*<div style={{padding: '20px', textAlign: 'center', verticalAlign: 'middle'}}><Flow/></div>*/}
             {/*<Flow/>*/}
-            {/*<AddNode/>*/}
-            {/*    <AddNodeMy/>*/}
+            <AddNode/>
             {/*<Intersections/>*/}
-                <IntersectionsMy/>
             {/*    <FloatingEdges/>*/}
-            {/*    <FloatingEdgeMy/>*/}
             {/*    <ProximityConnect/>*/}
-            {/*    <ProximityConnectMy/>*/}
+            {/*    <Tutorial/>*/}
             </ReactFlowProvider>
         </div>
     )

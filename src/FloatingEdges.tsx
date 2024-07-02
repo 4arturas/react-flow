@@ -22,10 +22,10 @@ export const FloatingEdges= () =>
     const getIntersectionPoint = React.useCallback( (source:Node, target:Node) => {
         const w = source.width/2;
         const h = source.height/2;
-        const x2  = source.position.x+w;
-        const y2 = source.position.y+h;
-        const x1 = target.position.x+target.width/2;
-        const y1 = target.position.y+target.height/2;
+        const x2  = source.positionAbsolute.x+w;
+        const y2 = source.positionAbsolute.y+h;
+        const x1 = target.positionAbsolute.x+target.width/2;
+        const y1 = target.positionAbsolute.y+target.height/2;
         const left = (x1-x2)/source.width;
         const right = (y1-y2)/source.height;
         const xx1 = left-right;
@@ -40,13 +40,20 @@ export const FloatingEdges= () =>
     }, [] );
 
     const getPosition = React.useCallback( (node:Node, intersectionPoint:{x:number,y:number}) => {
-        if ( intersectionPoint.x <= node.position.x )
+        if (intersectionPoint.x <= node.positionAbsolute.x + 1) {
             return Position.Left;
-        if ( intersectionPoint.x >= node.width+node.position.x )
+        }
+        if (intersectionPoint.x >= node.positionAbsolute.x + node.width - 1) {
             return Position.Right;
-        if ( intersectionPoint.y <= node.position.y )
+        }
+        if (intersectionPoint.y <= node.positionAbsolute.y + 1) {
             return Position.Top;
-        return Position.Bottom;
+        }
+        if (intersectionPoint.y >= node.positionAbsolute.y + node.height - 1) {
+            return Position.Bottom;
+        }
+
+        return Position.Top;
     }, [getIntersectionPoint] );
 
     const getEdgeParams = React.useCallback( (source:Node, target:Node) => {

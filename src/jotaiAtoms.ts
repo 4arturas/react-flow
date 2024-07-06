@@ -58,3 +58,95 @@ export const edgesJotai = atom([
         animated: true
     } as Edge
 ] as Edge[]);
+
+
+// GRAPH
+const TREE_GRAPH: number[][] = [ // G[i][j] indicates whether the path from the i-th node to the j-th node exists or not
+    [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+];
+
+const createNodesAndEdges = ( GRAPH:number[][] ) =>
+{
+    const graphEdges = [];
+    for ( let j = 0; j < GRAPH.length; j++ )
+    {
+        for ( let k = 0; k < GRAPH[0].length; k++ )
+        {
+            const exists = GRAPH[j][k];
+            if ( exists === 0 )
+                continue;
+
+            const edge = {
+                id: `${j}-${k}`,
+                source: `${j}`,
+                target: `${k}`
+            } as Edge;
+            graphEdges.push( edge );
+
+        } // end for k
+    } // end for j
+
+    const graphNodes = GRAPH[0].map( (_:number, idx:number) =>
+        {
+            return {
+                id: `${idx}`,
+                position: {
+                    x: 0,
+                    y: 0,
+                },
+                data: { label: `${idx}`},
+                style: {
+                    width:30, height:30,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center"
+                }
+            } as Node;
+        }
+    )
+    let yPos = 0;
+    const verticalSpan = GRAPH.length*5;
+    let horizontalSpan = GRAPH.flatMap((f) =>f).reduce(( accumulator:number, currentValue:number) => accumulator + currentValue, 0 )*GRAPH.length;
+    for ( let y = 0; y < GRAPH.length; y++ )
+    {
+        const parent = graphNodes[y];
+        const numChildren = GRAPH[y].reduce( (accumulator:number, currentValue:number) => accumulator + currentValue, 0 );
+        if ( numChildren === 0 )
+            continue;
+
+        let beginLeft = (parent.position.x - ((numChildren-1)*horizontalSpan)/numChildren);
+        for ( let x = 0; x < GRAPH[0].length; x++ )
+        {
+            const exists = GRAPH[y][x];
+            if ( exists === 0 )
+                continue;
+
+            const child:Node|undefined = graphNodes.find( (f:Node) => f.id === `${x}` );
+            if ( !child )
+                continue;
+
+            child.position.x = beginLeft;
+            child.position.y = yPos+verticalSpan;
+            beginLeft += horizontalSpan;
+        } // end for x
+        if ( numChildren === 0 ) continue;
+        yPos += verticalSpan
+        horizontalSpan -= GRAPH.length;
+    } // end for y
+    return { graphNodes, graphEdges };
+}
+
+const { graphNodes, graphEdges } = createNodesAndEdges(TREE_GRAPH);
+
+export const jotaiGraphEdges = atom(graphEdges);
+export const jotaiGraphNodes = atom(graphNodes);

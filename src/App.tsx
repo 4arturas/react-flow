@@ -9,6 +9,7 @@ import {Intersections} from "./Intersections.tsx";
 import {FloatingEdges} from "./FloatingEdges.tsx";
 import {ProximityConnect} from "./ProximityConnect.tsx";
 import {Tutorial} from "./Tutorial.tsx";
+import {Tree} from "./Tree.tsx";
 
 function App()
 {
@@ -26,11 +27,12 @@ function App()
             {/*<CharacterCounter/>*/}
             {/*<div style={{padding: '20px', textAlign: 'center', verticalAlign: 'middle'}}><Flow/></div>*/}
             {/*<Flow/>*/}
-            <AddNode/>
+            {/*<AddNode/>*/}
             {/*<Intersections/>*/}
             {/*    <FloatingEdges/>*/}
             {/*    <ProximityConnect/>*/}
             {/*    <Tutorial/>*/}
+                <Tree/>
             </ReactFlowProvider>
         </div>
     )

@@ -10,6 +10,7 @@ import {FloatingEdges} from "./FloatingEdges.tsx";
 import {ProximityConnect} from "./ProximityConnect.tsx";
 import {Tutorial} from "./Tutorial.tsx";
 import {Tree} from "./Tree.tsx";
+import {Adfs} from "./Adfs.tsx";
 
 function App()
 {
@@ -32,7 +33,8 @@ function App()
             {/*    <FloatingEdges/>*/}
             {/*    <ProximityConnect/>*/}
             {/*    <Tutorial/>*/}
-                <Tree/>
+                <Adfs/>
+                {/*<Tree/>*/}
             </ReactFlowProvider>
         </div>
     )

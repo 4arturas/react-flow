@@ -89,7 +89,7 @@ const createNodesAndEdges = ( GRAPH:number[][] ) =>
             const edge = {
                 id: `${j}-${k}`,
                 source: `${j}`,
-                target: `${k}`
+                target: `${k}`,
             } as Edge;
             graphEdges.push( edge );
 

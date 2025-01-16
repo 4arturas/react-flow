@@ -32,3 +32,10 @@ body,
   stroke: #bbb;
   stroke-dasharray: 5 5;
 }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}

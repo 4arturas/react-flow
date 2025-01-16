@@ -185,7 +185,7 @@ export const Adfs = () => {
                     setTokens( newToken );
             }
             setState(newSate)
-        }, 500);
+        }, 2000);
     }, [setState] )
 
     // const timer = React.useRef<null|number>(null);
@@ -245,7 +245,8 @@ export const Adfs = () => {
 
         function setArrow( currentState:string, edge: Edge ) : boolean
         {
-            switch ( currentState )
+            return edge.id.endsWith( currentState );
+            /*switch ( currentState )
             {
                 case n0_Start.id:
                     return edge.id === e0.id;
@@ -260,7 +261,7 @@ export const Adfs = () => {
                 case STATE_06_SAVE_JWT_AND_REFRESH_TOKENS_INTO_BORWSERS_STORAGE:
                     return edge.id === e6.id
             }
-            return false;
+            return false;*/
         }
 
         setEdges( (eds) => eds.map((edge) => {

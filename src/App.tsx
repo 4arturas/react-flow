@@ -3,9 +3,11 @@ import {Flow} from "./Flow.tsx";
 import {counter} from "./jotaiAtoms.ts";
 import { useAtom } from 'jotai';
 import {ReactFlowProvider} from "reactflow";
+import {AddNode} from "./AddNode.tsx";
+import {Intersections} from "./Intersections.tsx";
+import {ProximityConnect} from "./ProximityConnect.tsx";
+import {Adfs} from "./Adfs.tsx";
 
-import {Tutorial} from "./Tutorial.tsx";
-import FFT from "./FFT.tsx";
 
 function App()
 {
@@ -26,14 +28,14 @@ function App()
 
             {/*<CharacterCounter/>*/}
             {/*<div style={{padding: '20px', textAlign: 'center', verticalAlign: 'middle'}}><Flow/></div>*/}
-            <Flow/>
+            {/*<Flow/>*/}
             {/*<AddNode/>*/}
             {/*<Intersections/>*/}
             {/*    <FloatingEdges/>*/}
-            {/*    <ProximityConnect/>*/}
+                <ProximityConnect/>
             {/*    <Tutorial/>*/}
             {/*    <Adfs/>*/}
-                {/*<Tree/>*/}
+            {/*    <Tree/>*/}
                 {/*<Threejs/>*/}
                 {/*<GraphApp/>*/}
                 {/*<FFT/>*/}

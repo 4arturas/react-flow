@@ -11,7 +11,7 @@ import {
     ReactFlow,
     useEdgesState,
     useNodesState, useStore, useStoreApi, useReactFlow
-} from "reactflow";
+} from "@xyflow/react";
 import {useImmerAtom} from "jotai-immer";
 import {jotaiGraphEdges, jotaiGraphNodes} from "./jotaiAtoms.ts";
 

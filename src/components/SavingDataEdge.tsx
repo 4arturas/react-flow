@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import {BaseEdge, getSmoothStepPath, BezierEdge, type EdgeProps, getBezierPath, EdgeLabelRenderer} from '@xyflow/react';
-import {useImmerAtom} from "jotai-immer";
-import {edgesPaths, IEdgePath} from "@/components/jotaiAtoms";
 import {useAtom} from "jotai";
+import {edgesPaths, IEdgePath} from "../jotaiAtoms.ts";
 
 export function SavingDataEdge({
                                     id,
@@ -28,7 +27,8 @@ export function SavingDataEdge({
 
     const [edgesArray, setEdgesArray] = useAtom(edgesPaths);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         const edge: IEdgePath = { id: id, path: edgePath };
         const changedEdgesArray: IEdgePath[] = edgesArray.filter( f => f.id !== id );
         changedEdgesArray.push( edge );

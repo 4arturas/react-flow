@@ -1,16 +1,5 @@
-import {
-    Background,
-    BaseEdge, EdgeLabelRenderer,
-    EdgeProps,
-    getBezierPath,
-    ReactFlow,
-    useEdgesState,
-    useNodesState,
-    Node, Edge, Position, useStore
-} from "reactflow";
-import {createNodesAndEdges} from "./utils.ts";
+
 import React from "react";
-import {Connection} from "@reactflow/core/dist/esm/types/general";
 
 const {nodes: initNodes, edges: initEdges} = createNodesAndEdges();
 

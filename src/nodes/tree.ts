@@ -122,10 +122,20 @@ export const initialEdges =
             // type: 'step',
             // type: 'bezier',
             // type: 'animatedNode',
-            // type: 'animatedSvg',
-            type: 'savingDataEdge',
+            type: 'animatedSvg',
+            // type: 'savingDataEdge',
             animated: false,
-            data: { start: 0, stop: 0 }
+            // data: { start: 0, stop: 0 }
+            data: {
+                start: 0, stop: 0,
+                timestampFrom: null,
+                timestampTo: null,
+                activities: [
+                    { duration: 1000, color: "red" },
+                    { duration: 2000, color: "green" },
+                    { duration: 3000, color: "blue" },
+                ]
+            }
         }
     ));
 // initialEdges[0].type = 'animatedSvg';
@@ -256,3 +266,41 @@ function reverseNodes(nodes: Node[]) : Node[] {
         }
     });
 }
+
+
+export function generateRandomEdges(dateFrom: Date, source: string, target: string, edges: Edge[]): Edge[]
+{
+    const randomEdges: Edge[] = [];
+    const path = findPath( edges, source, target ); // Replace "someEndNode" with the actual end node
+
+    if (path) {
+        let previousTime = dateFrom;
+        for (let i = 0; i < path.length; i++)
+        {
+            if ( i !== 0 )
+            {
+                previousTime = randomEdges[i-1].data.timestampTo;
+            }
+
+            const edge = path[i];
+            const from = 1000;
+            const to = 5000;
+            const randomMillis = Math.floor(Math.random() * (to - from + 1)) + from;
+
+            const timestampFrom = previousTime;
+            const timestampTo = new Date( previousTime.getTime() + randomMillis );
+            randomEdges.push({
+                ...edge,
+                data: {
+                    timestampFrom: timestampFrom,
+                    timestampTo: timestampTo
+                }
+            });
+        }
+    }
+
+    return randomEdges;
+}
+
+export const testRandomPath = generateRandomEdges( new Date( new Date().getTime() + 3000 ), "World", "Zaragoza", initialEdges );
+// console.log( testRandomPath );

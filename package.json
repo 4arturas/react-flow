@@ -10,13 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@xyflow/react": "^12.4.1",
     "immer": "^10.1.1",
     "jotai": "^2.11.0",
     "jotai-immer": "^0.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-timer-hook": "^3.0.8",
-    "reactflow": "^11.11.4",
     "three": "^0.172.0"
   },
   "devDependencies": {

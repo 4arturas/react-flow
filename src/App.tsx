@@ -1,12 +1,14 @@
-import 'reactflow/dist/style.css';
+import '@xyflow/react/dist/style.css';
 import {Flow} from "./Flow.tsx";
 import {counter} from "./jotaiAtoms.ts";
 import { useAtom } from 'jotai';
-import {ReactFlowProvider} from "reactflow";
 import {AddNode} from "./AddNode.tsx";
 import {Intersections} from "./Intersections.tsx";
 import {ProximityConnect} from "./ProximityConnect.tsx";
 import {Adfs} from "./Adfs.tsx";
+import TreeComponent from "./TreeComponent.tsx";
+import {ReactFlowProvider} from "@xyflow/react";
+import {FloatingEdges} from "./FloatingEdges.tsx";
 
 
 function App()
@@ -32,7 +34,8 @@ function App()
             {/*<AddNode/>*/}
             {/*<Intersections/>*/}
             {/*    <FloatingEdges/>*/}
-                <ProximityConnect/>
+            {/*    <ProximityConnect/>*/}
+              <TreeComponent/>
             {/*    <Tutorial/>*/}
             {/*    <Adfs/>*/}
             {/*    <Tree/>*/}

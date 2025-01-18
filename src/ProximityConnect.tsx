@@ -8,8 +8,7 @@ import {
     useNodesState,
     addEdge,
     useStoreApi
-} from "reactflow";
-import {Connection} from "@reactflow/core/dist/esm/types/general";
+} from "@xyflow/react";
 import React, {type MouseEvent as ReactMouseEvent} from "react";
 
 const commonStyle = {

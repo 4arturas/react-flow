@@ -1,8 +1,17 @@
 import { atom } from 'jotai';
-import {Edge, Node, Position} from 'reactflow';
+import {Edge, Node, Position} from '@xyflow/react';
 import {atomWithImmer} from "jotai-immer";
 
 export const counter = atom(0);
+
+export interface IEdgePath
+{
+    id: string;
+    path: string
+}
+
+export const edgesPaths = atom<IEdgePath[]>([]);
+export const activeEdgesAtom = atom<Edge[]>( [] );
 
 const commonStyle = {
     borderRadius: "100%",

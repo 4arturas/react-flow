@@ -1,5 +1,5 @@
-import {addEdge, applyEdgeChanges, applyNodeChanges, Node, Edge, ReactFlow} from "reactflow";
-import 'reactflow/dist/style.css';
+import {addEdge, applyEdgeChanges, applyNodeChanges, Node, Edge, ReactFlow} from "@xyflow/react";
+import '@xyflow/react/dist/style.css';
 
 import {useAtom} from "jotai/index";
 import {counter, edgesJotai, nodesJotai} from "./jotaiAtoms.ts";

@@ -1,6 +1,6 @@
-import 'reactflow/dist/style.css';
+import '@xyflow/react/dist/style.css';
 import React from "react";
-import {useNodesState, Node, useEdgesState, addEdge, useReactFlow, Edge, ReactFlow} from "reactflow";
+import {useNodesState, Node, useEdgesState, addEdge, useReactFlow, Edge, ReactFlow} from "@xyflow/react";
 
 const initNode: Node = {
     id: "Node",

@@ -1,4 +1,4 @@
-import {Edge, MarkerType, Node, Position, ReactFlow, useEdgesState, useNodesState} from "reactflow";
+import {Edge, MarkerType, Node, Position, ReactFlow, useEdgesState, useNodesState} from "@xyflow/react";
 import React from "react";
 
 

@@ -1,51 +1,53 @@
-import React, {useCallback, type MouseEvent, useEffect, useState, useRef, ReactElement, FC} from 'react';
+import React from 'react';
 import {
     ReactFlow,
-    Background,
-    Controls,
-    ReactFlowProvider,
-    useReactFlow,
     useNodesState,
-    type Edge,
-    type Node, useEdgesState, EdgeChange, OnEdgesChange,
-    applyEdgeChanges, ReactFlowInstance, getBezierPath, Position, useInternalNode, applyNodeChanges
+    useEdgesState,
+    applyEdgeChanges
 } from '@xyflow/react';
 
 import '@xyflow/react/dist/style.css';
-import {initialEdges, initialNodes} from "./nodes/tree";
-import '@xyflow/react/dist/style.css';
+import {initialEdges, initialNodes, testRandomPath} from "./nodes/tree";
 import './index.css';
-import {AnimatedSVGEdge} from "@/components/AnimatedSVGEdge";
-import {AnimatedNodeEdge} from "@/components/AnimatedNodeEdge";
-// import {useAtom} from "jotai/react/useAtom";
-// import {counter, edgesJotai, nodesJotai} from "@/components/jotaiAtoms";
-
-import {counter, edgesPaths} from "../components/jotaiAtoms";
-import { useAtom } from 'jotai';
-import {SavingDataEdge} from "@/components/SavingDataEdge";
+import { AnimatedSVGEdge } from './components/AnimatedSVGEdge';
+import {useAtom} from "jotai";
+import {activeEdgesAtom, counter, edgesPaths} from "./jotaiAtoms.ts";
+import {AnimatedNodeEdge} from "./components/AnimatedNodeEdge.tsx";
+import {SavingDataEdge} from "./components/SavingDataEdge.tsx";
 
 type ChildProps = {
-    edgesArray: string,
+  path: string;
+  duration: number;
+};
+
+function Bumbuliukas({ path, duration }: ChildProps): JSX.Element
+{
+  console.log( path );
+  const svgContent = `
+    <circle r="5" fill="#ff0073">
+      <animateMotion dur="${duration}ms" fill="freeze">
+        <mpath href="#path" />
+      </animateMotion>
+      <animate attributeName="opacity" from="1" to="0" begin="${duration}ms" dur="1ms" fill="freeze" />
+    </circle>
+  `;
+
+  return (
+    <svg>
+      <path id="path" d={path} fill="none" stroke="transparent" />
+      <g dangerouslySetInnerHTML={{ __html: svgContent }} />
+    </svg>
+  );
 }
-const Bumbuliukas: FC<ChildProps> = ({edgesArray}): ReactElement => {
-    {
-        return <circle
-            // style={{filter: `drop-shadow(3px 3px 5px red`}}
-            r="5"
-            fill="#ff0073"
-        >
-            <animateMotion dur="1000ms" fill="freeze" path={edgesArray}/>
-            <animate attributeName="opacity" from="1" to="0" begin="1000ms" dur="1ms" fill="freeze"/>
-        </circle>
-    }
-}
+
 
 export default function TreeComponent() {
-    const [count, setCounter] = useAtom(counter);
-    const [edgesArray, setEdgesArray] = useAtom(edgesPaths);
+    const [count, setCount] = useAtom(counter);
+    const [activeEdges, setActiveEdges] = useAtom(activeEdgesAtom);
+    const [paths] = useAtom(edgesPaths);
+    // const [edgesArray, setEdgesArray] = useAtom(edgesPaths);
 
-    const [rfInstance, setRfInstance] = useState<ReactFlowInstance | null>(null);
-    const intervalRef = useRef<NodeJS.Timeout | null>(null)
+    const intervalRef = React.useRef<NodeJS.Timeout | null>(null)
 
 
     const edgeTypes = {
@@ -57,56 +59,67 @@ export default function TreeComponent() {
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, /*onEdgesChange*/] = useEdgesState(initialEdges);
 
-    const onEdgesChange = useCallback(
+    const onEdgesChange = React.useCallback(
         (changes:any[]) => {
             setEdges((oldEdges) => applyEdgeChanges(changes, oldEdges));
         },
         [setEdges],
     );
 
-/*    const [nodes, setNodes] = useAtom(nodesJotai);
-    const [edges, setEdges] = useAtom(edgesJotai);
-
-    const onNodeChange = useCallback(
-        (x:Node) => setNodes( (newNode) => applyNodeChanges( x, newNode ) ),
-        [setNodes]
-    );
-
-    const onEdgeChange = useCallback(
-        (x:Edge) => setEdges((eds:Edge[]) => applyEdgeChanges(x, eds)),
-        [setEdges]
-    );
-
-    const onEdgeConnect = useCallback(
-        (x:Edge) => setEdges((eds) => addEdge({ ...x, animated: true }, eds) ),
-        [setEdges]
-    )*/
-
-
-    useEffect(() => {
+    React.useEffect(() => {
         intervalRef.current = setInterval(() => {
+
+            const newCount = ( count + 1 ) % initialEdges.length;
+            setCount( newCount );
+
             setEdges((prevEdges) =>
                 prevEdges.map((edge) => {
 
+                  /*if ( edge.type !== "animatedSvg" )
+                    edge.type = "animatedSvg";
+                  else
+                    edge.type = "";*/
+
+                  const path = testRandomPath
+                    .filter( (edge) => {
+                      const timestampFrom = edge.data.timestampFrom as Date;
+                      const timestampTo = edge.data.timestampTo as Date;
+
+                      function timeCondition( timestampFrom: Date, timestampTo: Date ) : boolean
+                      {
+                        const condition1 = timestampFrom >= new Date();
+                        const condition2 = timestampTo >= new Date();
+                        const condition = condition1 && condition2;
+                        return condition;
+                      }
+                      const condition = timeCondition( timestampFrom, timestampTo );
+
+                      const newEdgePathArray = [];
+                      if ( condition )
+                      {
+                        const activeEdgeFind = activeEdges.find( activeEdge =>
+                        {
+                          const condition = timeCondition( activeEdge.data.timestampFrom, activeEdge.data.timestampTo );
+                          return activeEdge.id === edge.id && condition;
+                        });
+                      }
+
+                      return condition;
+                    } );
+                  // console.log( path );
+
                     /*if (edge.id.startsWith('eWorld-'))
                     {
-                        // const source = useStore( React.useCallback((store) =>  store..get(props.source), [props.source] ) );
-                        // const sourceNode = useInternalNode(edge.source);
-                        // const targetNode = useInternalNode(edge.target);
-
-                        // edge.label = 'xxx';
-                        // console.log( edge.data );
-
                         if (edge.animated) {
-                            return { ...edge, type: undefined, animated: false, label: '' };
+                            return { ...edge, type: '', animated: false, label: '' };
                         } else {
-                            return { ...edge, type: undefined, animated: true, label: 'animated' };
+                            return { ...edge, type: '', animated: true, label: 'animated' };
                         }
-                    }*/
+                    }
 
                     const currentTime = Date.now();
                     edge.animated = currentTime > edge.data.start && currentTime < edge.data.stop;
-                    setCounter( count+1 );
+                    setCounter( count+1 );*/
 
                     return edge;
                 })
@@ -120,8 +133,8 @@ export default function TreeComponent() {
 
     return (
         <div style={{width: '100vw', height: '100vh'}}>
-            <button>{count}</button>
-            { edgesArray && <Bumbuliukas edgesArray={edgesArray[0]?.path} /> }
+            {/*<button>{count}</button>*/}
+            { paths.length > 0 && 'Hello' }
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -130,7 +143,6 @@ export default function TreeComponent() {
                 onEdgesChange={onEdgesChange}
                 fitView={true}
                 selectNodesOnDrag={false}
-                // onLoad={setRfInstance}
             />
         </div>
     );
